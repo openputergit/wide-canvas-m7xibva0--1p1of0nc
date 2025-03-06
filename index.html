@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DriveEase - All-in-One Vehicle Services</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            font-family: 'Poppins', sans-serif;
+        }
+        .service-card:hover {
+            transform: translateY(-5px);
+            transition: transform 0.3s ease;
+        }
+        .loading {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.9);
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #3498db;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <div id="loading" class="loading">
+        <div class="loading-spinner"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <span class="text-2xl font-bold text-blue-600">DriveEase</span>
+                </div>
+                <div class="hidden md:flex items-center space-x-4">
+                    <a href="#" class="text-gray-700 hover:text-blue-600">Home</a>
+                    <a href="#" class="text-gray-700 hover:text-blue-600">Services</a>
+                    <a href="#" class="text-gray-700 hover:text-blue-600">About</a>
+                    <button class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">Login</button>
+                </div>
+                <div class="md:hidden">
+                    <button id="menu-btn" class="text-gray-700">
+                        <i class="bi bi-list text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden">
+            <div class="px-2 pt-2 pb-3 space-y-1">
+                <a href="#" class="block px-3 py-2 text-gray-700 hover:bg-blue-600 hover:text-white rounded">Home</a>
+                <a href="#" class="block px-3 py-2 text-gray-700 hover:bg-blue-600 hover:text-white rounded">Services</a>
+                <a href="#" class="block px-3 py-2 text-gray-700 hover:bg-blue-600 hover:text-white rounded">About</a>
+                <a href="#" class="block px-3 py-2 bg-blue-600 text-white rounded">Login</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="bg-blue-600 text-white">
+        <div class="max-w-7xl mx-auto px-4 py-16">
+            <div class="grid md:grid-cols-2 gap-8 items-center">
+                <div>
+                    <h1 class="text-4xl md:text-5xl font-bold mb-4">Your All-in-One Vehicle Service Solution</h1>
+                    <p class="text-xl mb-8">From self-driving car rentals to instant taxi services, we've got all your transportation needs covered.</p>
+                    <button class="bg-white text-blue-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100">Get Started</button>
+                </div>
+                <div class="hidden md:block">
+                    <img src="https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Car service" class="rounded-lg shadow-xl">
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Services Section -->
+    <section class="py-16">
+        <div class="max-w-7xl mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-12">Our Services</h2>
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Car Rental Card -->
+                <div class="service-card bg-white rounded-lg shadow-lg p-6">
+                    <i class="bi bi-car-front text-4xl text-blue-600 mb-4"></i>
+                    <h3 class="text-xl font-semibold mb-2">Car Rentals</h3>
+                    <p class="text-gray-600">Self-driving cars with real-time GPS tracking and instant booking.</p>
+                    <button onclick="showCarRental()" class="mt-4 text-blue-600 hover:text-blue-700">Book Now →</button>
+                </div>
+
+                <!-- Taxi Service Card -->
+                <div class="service-card bg-white rounded-lg shadow-lg p-6">
+                    <i class="bi bi-taxi-front text-4xl text-blue-600 mb-4"></i>
+                    <h3 class="text-xl font-semibold mb-2">Taxi Services</h3>
+                    <p class="text-gray-600">Book instant rides with fare estimates and live tracking.</p>
+                    <button onclick="showTaxiBooking()" class="mt-4 text-blue-600 hover:text-blue-700">Book Now →</button>
+                </div>
+
+                <!-- Mechanic Card -->
+                <div class="service-card bg-white rounded-lg shadow-lg p-6">
+                    <i class="bi bi-tools text-4xl text-blue-600 mb-4"></i>
+                    <h3 class="text-xl font-semibold mb-2">Mechanic Finder</h3>
+                    <p class="text-gray-600">Find nearby mechanics and track repair status in real-time.</p>
+                    <button onclick="findMechanic()" class="mt-4 text-blue-600 hover:text-blue-700">Find Now →</button>
+                </div>
+
+                <!-- Courier Card -->
+                <div class="service-card bg-white rounded-lg shadow-lg p-6">
+                    <i class="bi bi-box-seam text-4xl text-blue-600 mb-4"></i>
+                    <h3 class="text-xl font-semibold mb-2">Courier Delivery</h3>
+                    <p class="text-gray-600">Schedule pickups and track your packages in real-time.</p>
+                    <button onclick="showCourierService()" class="mt-4 text-blue-600 hover:text-blue-700">Send Package →</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Booking Modal -->
+    <div id="bookingModal" class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full">
+        <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
+            <div class="mt-3">
+                <h3 class="text-lg font-semibold" id="modalTitle">Book a Service</h3>
+                <form id="bookingForm" class="mt-4">
+                    <div class="mb-4">
+                        <label class="block text-gray-700 text-sm font-bold mb-2">Pick-up Location</label>
+                        <input type="text" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700" required>
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-gray-700 text-sm font-bold mb-2">Drop-off Location</label>
+                        <input type="text" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700" required>
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-gray-700 text-sm font-bold mb-2">Date & Time</label>
+                        <input type="datetime-local" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700" required>
+                    </div>
+                    <div class="flex justify-between">
+                        <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Confirm Booking</button>
+                        <button type="button" onclick="closeModal()" class="bg-gray-300 text-gray-700 px-4 py-2 rounded hover:bg-gray-400">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Mobile menu toggle
+        const menuBtn = document.getElementById('menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        menuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Modal functionality
+        const modal = document.getElementById('bookingModal');
+        const modalTitle = document.getElementById('modalTitle');
+        const bookingForm = document.getElementById('bookingForm');
+
+        function showModal(title) {
+            modalTitle.textContent = title;
+            modal.classList.remove('hidden');
+        }
+
+        function closeModal() {
+            modal.classList.add('hidden');
+        }
+
+        function showLoading() {
+            document.getElementById('loading').style.display = 'flex';
+        }
+
+        function hideLoading() {
+            document.getElementById('loading').style.display = 'none';
+        }
+
+        function showCarRental() {
+            showModal('Book a Self-Driving Car');
+        }
+
+        function showTaxiBooking() {
+            showModal('Book a Taxi');
+        }
+
+        function findMechanic() {
+            showModal('Find a Mechanic');
+        }
+
+        function showCourierService() {
+            showModal('Schedule Courier Pickup');
+        }
+
+        // Form submission
+        bookingForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            showLoading();
+
+            // Simulate API call
+            try {
+                // Example MongoDB operation
+                const response = await fetch('https://r0c8kgwocscg8gsokogwwsw4.zetaverse.one/mongodb', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': 'Bearer 3RHr4s5KY5Xm7UayGTgoy1U9lcZ2',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        appSlug: 'driveease-123',
+                        action: 'create',
+                        collection: 'bookings',
+                        data: {
+                            service: modalTitle.textContent,
+                            pickup: e.target[0].value,
+                            dropoff: e.target[1].value,
+                            datetime: e.target[2].value,
+                            status: 'pending'
+                        }
+                    })
+                });
+
+                const data = await response.json();
+                if (data.success) {
+                    alert('Booking confirmed! We will contact you shortly.');
+                } else {
+                    throw new Error('Booking failed');
+                }
+            } catch (error) {
+                alert('Something went wrong. Please try again.');
+                console.error(error);
+            } finally {
+                hideLoading();
+                closeModal();
+                bookingForm.reset();
+            }
+        });
+    </script>
+<script>document.body.addEventListener('wheel', e => { if (!e.ctrlKey) return; e.preventDefault(); return }, { passive: false })</script>
+	</body>
+</html>
